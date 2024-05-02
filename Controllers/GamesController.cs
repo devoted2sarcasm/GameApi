@@ -5,11 +5,11 @@ using GameApi.Repositories;
 using System.Collections.Generic;
 using GameApi.Exceptions;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace GameApi.Controllers
 {
     [ApiController]
-    [EnableCors("DefaultCorsPolicy")]
     public class BoardGamesController : ControllerBase
     {
         private readonly GameDbContext _context;
@@ -22,7 +22,21 @@ namespace GameApi.Controllers
         [HttpGet("allGames", Name = "GetAllGames")]
         public List<BoardGame> GetAllGames()
         {
-            return this._context.BoardGames.ToList();
+            if (this._context.BoardGames.Count() == 0)
+            {
+                throw new System.Exception("No games found");
+                throw new NotFoundException("No games found");
+            }
+            else if (!ModelState.IsValid)
+            {
+                throw new InvalidInput("Invalid request. ", ModelState);
+            }
+            else
+            {
+                Console.WriteLine("Getting all games");
+                Console.WriteLine("this._context.BoardGames", this._context.BoardGames);
+                Console.WriteLine("this._context.BoardGames.ToList()", this._context.BoardGames.ToList());
+                return this._context.BoardGames.ToList();            }
         }
 
         [HttpGet("games", Name = "GetGames")]
