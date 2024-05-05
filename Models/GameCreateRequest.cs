@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-
+//look up custom annotation/validation attributes
 namespace GameApi.Models
 {
     public class GameCreateRequest

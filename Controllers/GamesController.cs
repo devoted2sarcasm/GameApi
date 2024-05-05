@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace GameApi.Controllers
 {
     [ApiController]
+    [EnableCors]
     public class BoardGamesController : ControllerBase
     {
         private readonly GameDbContext _context;
@@ -24,12 +25,8 @@ namespace GameApi.Controllers
         {
             if (this._context.BoardGames.Count() == 0)
             {
-                throw new System.Exception("No games found");
+                // throw new System.Exception("No games found");
                 throw new NotFoundException("No games found");
-            }
-            else if (!ModelState.IsValid)
-            {
-                throw new InvalidInput("Invalid request. ", ModelState);
             }
             else
             {

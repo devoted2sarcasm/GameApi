@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Cors;
 namespace GameApi.Controllers 
 {
     [ApiController]
+    [EnableCors]
     public class PlayGameController : ControllerBase
     {
         private readonly GameDbContext _context;
